@@ -40,8 +40,11 @@ class BasePage:
     
     @allure.step('Подождать смены текста в элементе')
     def wait_change_text(self, locator, value):
-        return WebDriverWait(self.driver, Config.DEFAULT_TIME_WAITER).until_not(EC.text_to_be_present_in_element(locator, value))
-    
+        self.wait_and_find_element(locator)
+        return WebDriverWait(self.driver, Config.DEFAULT_TIME_WAITER).until_not(
+            EC.text_to_be_present_in_element(locator, value)
+            )
+
     @allure.step('Подождать элемент на странице и ввести в него текст')
     def wait_and_add_text_to_element(self, locator, text):
         return self.wait_and_find_element(locator).send_keys(text)
